@@ -8,19 +8,27 @@ function Header(props) {
     <div className="header">
       <Container>
         <Row>
-          <Col lg={9}>
+          <Col lg={8}>
             <h1>COUNT OF MONEY</h1>
           </Col>
-          <Col lg={3}>
+          <Col lg={4}>
             {isLogged ? (
-              <div>
-                <Button>My account</Button>
-                <Button>Logout</Button>
+              <div className="d-flex justify-content-end">
+                <Button>
+                  <i class="fas fa-address-card"></i> My account
+                </Button>
+                <Button>
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </Button>
               </div>
             ) : (
-              <div>
-                <Button>Login</Button>
-                <Button>Signup</Button>
+              <div className="d-flex justify-content-end">
+                <Button>
+                  <i class="fas fa-sign-in-alt"></i> Login
+                </Button>
+                <Button>
+                  <i class="fas fa-user-plus"></i> Signup
+                </Button>
               </div>
             )}
           </Col>
