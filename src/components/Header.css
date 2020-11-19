@@ -11,3 +11,9 @@
 .header Button {
   margin: 0.5em;
 }
+
+.header a:hover,
+.header a {
+  color: inherit;
+  text-decoration: none;
+}
