@@ -1,5 +1,4 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PricesIndexes from "./components/PricesIndexes";
 import RightMenu from "./components/RightMenu";
