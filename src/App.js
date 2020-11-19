@@ -1,10 +1,12 @@
 import "./App.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PricesIndexes from "./components/PricesIndexes";
-import RightMenu from "./components/RightMenu";
 import News from "./components/News";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -14,26 +16,25 @@ function App() {
           <Header />
         </Row>
         <Container>
-          <Row>
-            <Col lg={9} className="main-content">
-              <h2>Main content</h2>
-              <Col>
-                <Row>
+          <Col className="main-content">
+            <h2>Main content</h2>
+            <Row>
+              <Switch>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/signup">
+                  <SignUp />
+                </Route>
+                <Route path="/">
                   <PricesIndexes />
-                </Row>
-                <Row>
                   <News />
-                </Row>
-              </Col>
-            </Col>
-            <Col lg={3}>
-              <RightMenu />
-            </Col>
-          </Row>
+                </Route>
+              </Switch>
+            </Row>
+          </Col>
         </Container>
-        <Row>
-          <Footer />
-        </Row>
+        <Footer />
       </Container>
     </div>
   );
