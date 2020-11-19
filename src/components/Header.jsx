@@ -7,24 +7,26 @@ function Header(props) {
 
   return (
     <div className="header">
-      <Container>
+      <Container fluid>
         <Row>
-          <Col lg={8} className="d-flex justify-content-start">
-            <Link to="/">
+          <Col md={7} className="header-title">
+            <Link to="/" className="ml-auto">
               <h1>COUNT OF MONEY</h1>
             </Link>
           </Col>
-          <Col lg={4}>
+          <Col md={5}>
             {isLogged ? (
-              <div className="d-flex justify-content-end">
+              <div className="header-button">
                 <Link to="/user">
                   <Button>
                     <i className="fas fa-address-card"></i> My account
                   </Button>
                 </Link>
-                <Button>
-                  <i className="fas fa-sign-out-alt"></i> Logout
-                </Button>
+                <Link to="/logout">
+                  <Button>
+                    <i className="fas fa-sign-out-alt"></i> Logout
+                  </Button>
+                </Link>
               </div>
             ) : (
               <div className="d-flex justify-content-end">

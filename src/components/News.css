@@ -1,5 +1,44 @@
 .news {
-  background-color: rgb(99, 35, 35);
+  background-color: rgba(255, 255, 255, 0.2);
   width: 100%;
-  height: 700px;
+  height: auto;
+  color: black;
+  margin: 1em 0;
+}
+.news.card {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.news.card .card-header {
+  background-color: rgba(255, 255, 255, 1);
+}
+.news .card-container {
+  justify-content: space-evenly;
+  padding-top: 1.5em;
+}
+.news .card {
+  width: 30%;
+  flex: none;
+  margin-bottom: 1.5em;
+}
+.news .card-text {
+  height: 150px;
+  overflow: hidden;
+}
+@media screen and (max-width: 992px) {
+  .news .card {
+    width: 47%;
+    margin-bottom: 0.75em;
+  }
+  .news .card-container {
+    padding-top: 1em;
+  }
+}
+@media screen and (max-width: 768px) {
+  .news .card {
+    width: 95%;
+    margin-bottom: 0.75em;
+  }
+  .news .card-container {
+    padding-top: 0.75em;
+  }
 }
