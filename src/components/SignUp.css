@@ -1,4 +1,8 @@
 .signup {
-  background-color: khaki;
-  height: 200px;
+  background-color: rgb(44, 73, 87);
+  height: auto;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
 }
