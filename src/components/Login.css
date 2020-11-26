@@ -1,4 +1,8 @@
 .login {
   background-color: rgb(116, 110, 58);
-  height: 200px;
+  height: auto;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
 }
