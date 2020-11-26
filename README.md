@@ -5,6 +5,8 @@
 - axios
 - react-router-dom
 - react-bootstrap
+- moment
+- rss-parser
 
 # Getting Started with Create React App
 

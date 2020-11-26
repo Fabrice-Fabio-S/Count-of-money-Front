@@ -21,8 +21,11 @@
   margin-bottom: 1.5em;
 }
 .news .card-text {
-  height: 150px;
+  height: auto;
   overflow: hidden;
+}
+.news .card-img-top {
+  padding: 0.25em;
 }
 @media screen and (max-width: 992px) {
   .news .card {
