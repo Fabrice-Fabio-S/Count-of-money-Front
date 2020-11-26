@@ -1,8 +1,9 @@
 .login {
-  background-color: rgb(116, 110, 58);
+  background-color: rgba(0, 0, 0, 0.5);
   height: auto;
-  margin-bottom: 1em;
+  margin: 1em;
   display: flex;
   flex-direction: column;
-  padding-bottom: 1em;
+  padding: 1em;
+  border-radius: 0.5em;
 }

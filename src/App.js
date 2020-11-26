@@ -18,7 +18,6 @@ function App() {
           </Row>
           <Container>
             <Col className="main-content">
-              <h2>Main content</h2>
               <Row>
                 <Switch>
                   <Route path="/login">
