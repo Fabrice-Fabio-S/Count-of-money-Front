@@ -1,18 +1,19 @@
 import "./Login.css";
 import React from "react";
+import axios from "axios";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { UserName: "", Password: "" };
+    this.state = { Mail: "", Password: "", id: {}, isLogged: false };
 
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
+    this.handleChangeMail = this.handleChangeMail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChangeUserName(event) {
-    this.setState({ UserName: event.target.value });
+  handleChangeMail(event) {
+    this.setState({ Mail: event.target.value });
   }
 
   handleChangePassword(event) {
@@ -20,18 +21,38 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    const { UserName, Password } = this.state;
+    event.preventDefault();
+    const { Mail, Password } = this.state;
 
-    if (!UserName) {
-      alert("Username not specified");
-      event.preventDefault();
+    var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(Mail)) {
+      alert("Incorrect filled in email");
       return -1;
     }
     if (!Password) {
       alert("Password not specified");
-      event.preventDefault();
       return -1;
     }
+
+    const user = {
+      email: Mail,
+      password: Password,
+    };
+    axios
+      .post("http://localhost:3000/api/login", user)
+      .then((res) => {
+        console.log("Reponse recu : " + JSON.stringify(res.data.data, null, 4));
+
+        this.setState({ id: res.data.data, isLogged: true });
+        localStorage.setItem("id", res.data.data);
+        localStorage.setItem("isLogged", true);
+      })
+      .catch(function (res) {
+        //handle error
+        console.log("Error : " + res);
+      });
   }
 
   render() {
@@ -41,11 +62,12 @@ class Login extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>
-              UserName :<br></br>
+              Mail :<br></br>
               <input
                 type="text"
-                value={this.state.UserName}
-                onChange={this.handleChangeUserName}
+                autoComplete="username"
+                value={this.state.Mail}
+                onChange={this.handleChangeMail}
               />
             </label>
           </div>
@@ -54,6 +76,7 @@ class Login extends React.Component {
               Password :<br></br>
               <input
                 type="password"
+                autoComplete="current-password"
                 value={this.state.Password}
                 onChange={this.handleChangePassword}
               />

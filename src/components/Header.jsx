@@ -5,6 +5,11 @@ import "./Header.css";
 function Header(props) {
   const { isLogged } = props;
 
+  const handleLogout = () => {
+    localStorage.clear();
+    console.log("---- Logout ----");
+  };
+
   return (
     <div className="header">
       <Container fluid>
@@ -23,7 +28,7 @@ function Header(props) {
                   </Button>
                 </Link>
                 <Link to="/logout">
-                  <Button>
+                  <Button onClick={handleLogout}>
                     <i className="fas fa-sign-out-alt"></i> Logout
                   </Button>
                 </Link>

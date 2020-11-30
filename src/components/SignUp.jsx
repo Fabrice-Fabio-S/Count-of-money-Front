@@ -1,13 +1,21 @@
 import "./SignUp.css";
 import React from "react";
+import axios from "axios";
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Mail: "", UserName: "", Password: "", ConfirmPassword: "" };
+    this.state = {
+      Mail: "",
+      LastName: "",
+      FirstName: "",
+      Password: "",
+      ConfirmPassword: "",
+    };
 
     this.handleChangeMail = this.handleChangeMail.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
+    this.handleChangeLastName = this.handleChangeLastName.bind(this);
+    this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(
       this
@@ -19,8 +27,12 @@ class SignUp extends React.Component {
     this.setState({ Mail: event.target.value });
   }
 
-  handleChangeUserName(event) {
-    this.setState({ UserName: event.target.value });
+  handleChangeLastName(event) {
+    this.setState({ LastName: event.target.value });
+  }
+
+  handleChangeFirstName(event) {
+    this.setState({ FirstName: event.target.value });
   }
 
   handleChangePassword(event) {
@@ -32,13 +44,17 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(event) {
-    const { Mail, UserName, Password, ConfirmPassword } = this.state;
+    const { Mail, LastName, FirstName, Password, ConfirmPassword } = this.state;
     var pattern = new RegExp(
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
-
-    if (!UserName) {
-      alert("Username not specified");
+    if (!LastName) {
+      alert("LastName not specified");
+      event.preventDefault();
+      return -1;
+    }
+    if (!FirstName) {
+      alert("LastName not specified");
       event.preventDefault();
       return -1;
     }
@@ -52,6 +68,24 @@ class SignUp extends React.Component {
       event.preventDefault();
       return -1;
     }
+
+    const newUser = {
+      lastname: LastName,
+      firstname: FirstName,
+      email: Mail,
+      password: Password,
+    };
+
+    axios
+      .post("http://localhost:3000/api/register", newUser)
+      .then(function (res) {
+        //handle success
+        console.log(res.data);
+      })
+      .catch(function (res) {
+        //handle error
+        console.log("Error : " + res);
+      });
   }
 
   render() {
@@ -61,11 +95,21 @@ class SignUp extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>
-              UserName :<br></br>
+              LastName :<br></br>
               <input
                 type="text"
-                value={this.state.UserName}
-                onChange={this.handleChangeUserName}
+                value={this.state.LastName}
+                onChange={this.handleChangeLastName}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              FirstName :<br></br>
+              <input
+                type="text"
+                value={this.state.FirstName}
+                onChange={this.handleChangeFirstName}
               />
             </label>
           </div>

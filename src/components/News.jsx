@@ -31,7 +31,7 @@ function News(props) {
           ? rssData.items.slice(0, 6).map((item, i) => {
               return (
                 <Card key={i}>
-                  <Card.Img variant="top" src={rssData.image.url} />
+                  <Card.Img variant="top" src={item.enclosure.url} />
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
                     <Card.Text>{item.contentSnippet}</Card.Text>

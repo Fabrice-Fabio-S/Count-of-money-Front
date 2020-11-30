@@ -25,7 +25,7 @@
   overflow: hidden;
 }
 .news .card-img-top {
-  padding: 0.25em;
+  padding: 0em;
 }
 @media screen and (max-width: 992px) {
   .news .card {
