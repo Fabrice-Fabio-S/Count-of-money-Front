@@ -7,6 +7,7 @@
 }
 .news.card {
   background-color: rgba(255, 255, 255, 0.7);
+  margin-top: 0;
 }
 .news.card .card-header {
   background-color: rgba(255, 255, 255, 1);
