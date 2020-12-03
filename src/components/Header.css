@@ -7,7 +7,11 @@
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
 }
-
+.header em {
+  font-size: 0.6em;
+  float: right;
+  margin-right: 1em;
+}
 .header Button {
   margin: 0.5em;
 }
