@@ -79,7 +79,7 @@ class SignUp extends React.Component {
     };
 
     axios
-      .post("http://localhost:3000/api/register", newUser)
+      .post(process.env.REACT_APP_BACK_API_URL + "/api/register", newUser)
       .then(function (res) {
         //handle success
         console.log(res.data);
