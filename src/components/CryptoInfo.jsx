@@ -10,7 +10,7 @@ function CryptoInfo() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/cryptos/${cmid}`)
+      .get(process.env.REACT_APP_BACK_API_URL + `/api/cryptos/${cmid}`)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
