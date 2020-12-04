@@ -1,0 +1,35 @@
+.article {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  color: black;
+  margin: 1em 0;
+}
+.article.card {
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-top: 0;
+}
+.article.card .card-header {
+  background-color: rgba(255, 255, 255, 1);
+}
+.article .card-container {
+  justify-content: space-evenly;
+  padding-top: 1.5em;
+}
+.article .card {
+  width: 80%;
+  flex: none;
+  margin-bottom: 1.5em;
+}
+.article .card-text {
+  padding-top: 1em;
+  height: auto;
+  overflow: hidden;
+}
+.article .card-img-top {
+  padding: 0em;
+}
+.article .card .card-subtitle {
+  color: darkgrey;
+}

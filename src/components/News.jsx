@@ -1,6 +1,7 @@
 // import axios from "axios";
 import { Card } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import RssParser from "rss-parser";
 import moment from "moment";
 import Spinner from "./Spinner/Spinner";
@@ -11,13 +12,14 @@ function News(props) {
   const [rssData, setRssData] = useState([]);
   const [rssIsLoaded, setRssIsLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [numberOfArticle, setNumberOfArticle] = useState(6);
 
   useEffect(() => {
     let parser = new RssParser();
     const rssFeed = async () => {
       setIsLoading(true);
       let feed = await parser.parseURL(
-        "https://cors-anywhere.herokuapp.com/https://cointelegraph.com/rss"
+        "https://cors-anywhere.herokuapp.com/https://cointelegraph.com/rss" // Use https://cors-anywhere.herokuapp.com/ in front of RSS FEED to use proxy for CORS problem
       );
       setRssData(feed);
       console.log(feed);
@@ -27,6 +29,10 @@ function News(props) {
     rssFeed();
   }, []);
 
+  const handleShowMore = () => {
+    setNumberOfArticle(numberOfArticle + 6);
+  };
+
   return (
     <Card className="news">
       <Card.Header>
@@ -35,12 +41,21 @@ function News(props) {
       <div className="d-flex flex-wrap card-container">
         {isLoading ? <Spinner /> : null}
         {rssIsLoaded
-          ? rssData.items.slice(0, 6).map((item, i) => {
+          ? rssData.items.slice(0, numberOfArticle).map((item, i) => {
               return (
                 <Card key={i}>
                   <Card.Img variant="top" src={item.enclosure.url} />
                   <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Title>
+                      <Link
+                        to={{
+                          pathname: `/articles/${i}`,
+                          state: { item: item },
+                        }}
+                      >
+                        {item.title}
+                      </Link>
+                    </Card.Title>
                     <Card.Text>{item.contentSnippet}</Card.Text>
                   </Card.Body>
                   <Card.Footer>
@@ -52,7 +67,7 @@ function News(props) {
                           })
                           .reduce((prev, curr) => [prev, " - ", curr])}
                       </p>
-                      {moment(item.pubDate).format("MMMM Do YYYY, h:mm:ss a")}
+                      {moment(item.pubDate).format("MMMM Do YYYY, h:mm a")}
                     </small>
                   </Card.Footer>
                 </Card>
@@ -60,6 +75,9 @@ function News(props) {
             })
           : null}
       </div>
+      <Card.Footer onClick={handleShowMore}>
+        <span>Show more</span>
+      </Card.Footer>
     </Card>
   );
 }
