@@ -1,9 +1,8 @@
-// import axios from "axios";
 import { Card } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import RssParser from "rss-parser";
 import moment from "moment";
+import axios from "axios";
 import Spinner from "./Spinner/Spinner";
 
 import "./News.css";
@@ -15,13 +14,12 @@ function News(props) {
   const [numberOfArticle, setNumberOfArticle] = useState(6);
 
   useEffect(() => {
-    let parser = new RssParser();
     const rssFeed = async () => {
       setIsLoading(true);
-      let feed = await parser.parseURL(
-        "https://cors-anywhere.herokuapp.com/https://cointelegraph.com/rss" // Use https://cors-anywhere.herokuapp.com/ in front of RSS FEED to use proxy for CORS problem
+      let feed = await axios.get(
+        process.env.REACT_APP_BACK_API_URL + "/api/articles"
       );
-      setRssData(feed);
+      setRssData(feed.data);
       console.log(feed);
       setRssIsLoaded(true);
       setIsLoading(false);
