@@ -25,8 +25,21 @@
   height: auto;
   overflow: hidden;
 }
+.news .card-title a {
+  color: #007bff;
+  transition: 0.1s;
+}
+.news .card-title a:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
 .news .card-img-top {
   padding: 0em;
+}
+
+.news > .card-footer {
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
 }
 @media screen and (max-width: 992px) {
   .news .card {

@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Article from "./components/Article";
 import CryptoInfo from "./components/CryptoInfo";
 import { Switch, Route } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
@@ -101,6 +102,9 @@ function App() {
                     </PublicRoute>
                     <Route path="/crypto/:cmid">
                       <CryptoInfo />
+                    </Route>
+                    <Route path="/articles/:id">
+                      <Article />
                     </Route>
                     <Route path="/">
                       <PricesIndexes />
