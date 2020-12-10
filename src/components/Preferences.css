@@ -10,9 +10,16 @@
 
   .dispCheckboxes
   {
-    margin: 1em;
-    display: flex;
+    margin: -0.5em;
+    height: auto;
     padding: 1em;
-    flex-direction: column;
+    border-radius: 0.5em;
+    align-items: center;
+    display: flex;
+  }
+
+  .span
+  {
+    margin-right: 2em;
   }
   
