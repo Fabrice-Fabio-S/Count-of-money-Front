@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Preferences from "./components/Preferences"
 import { Switch, Route } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 import axios from "axios";
@@ -88,6 +89,9 @@ function App() {
               <Col className="main-content">
                 <Row>
                   <Switch>
+                    <Route path="/preferences">
+                      <Preferences />
+                    </Route>
                     <Route path="/login">
                       <Login />
                     </Route>
