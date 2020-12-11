@@ -1,0 +1,25 @@
+.preferences {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: auto;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border-radius: 0.5em;
+  }
+
+  .dispCheckboxes
+  {
+    margin: -0.5em;
+    height: auto;
+    padding: 1em;
+    border-radius: 0.5em;
+    align-items: center;
+    display: flex;
+  }
+
+  .span
+  {
+    margin-right: 2em;
+  }
+  
