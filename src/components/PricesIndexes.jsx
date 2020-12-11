@@ -46,7 +46,7 @@ function PricesIndexes(props) {
       await axios
         .get("https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR")
         .then((data) => {
-          console.log(data.data.rates.EUR);
+          console.log("Change rate €/$ : " + data.data.rates.EUR);
           setRateExchange(data.data.rates.EUR);
         })
         .catch(() => {

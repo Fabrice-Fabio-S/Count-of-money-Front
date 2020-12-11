@@ -3,6 +3,7 @@ import React from "react";
 // import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 class Login extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class Login extends React.Component {
           handleSubmit,
           handleChangePassword,
           handleChangeMail,
+          errorMsg,
         }) =>
           isLogged ? (
             <Redirect to="/" />
@@ -49,6 +51,7 @@ class Login extends React.Component {
                 <button type="submit" className="btn btn-primary">
                   Submit
                 </button>
+                {errorMsg && <Alert variant={"danger"}>{errorMsg}</Alert>}
               </form>
             </div>
           )

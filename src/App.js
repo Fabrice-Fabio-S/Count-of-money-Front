@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Preferences from "./components/Preferences"
+import Preferences from "./components/Preferences";
 import Article from "./components/Article";
 import CryptoInfo from "./components/CryptoInfo";
 import { Switch, Route } from "react-router-dom";
@@ -25,6 +25,7 @@ function App() {
   const [id, setId] = useState(localStorage.getItem("id") || {});
   const [Mail, setMail] = useState("");
   const [Password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   // Handle
   const handleChangeMail = (e) => {
     setMail(e.target.value);
@@ -60,11 +61,17 @@ function App() {
     axios
       .post(process.env.REACT_APP_BACK_API_URL + "/api/login", user)
       .then((res) => {
-        console.log("Reponse recu : " + JSON.stringify(res.data.data, null, 4));
-        setId(res.data.data);
-        setIsLogged(true);
-        localStorage.setItem("id", JSON.stringify(res.data.data));
-        localStorage.setItem("isLogged", true);
+        if (res.data.statusCode === 200) {
+          console.log("Reponse recu : " + JSON.stringify(res.data, null, 4));
+          setId(res.data.data);
+          setIsLogged(true);
+          localStorage.setItem("id", JSON.stringify(res.data.data));
+          localStorage.setItem("isLogged", true);
+          setErrorMsg("");
+        } else {
+          console.log("Authentification error");
+          setErrorMsg("Your email or your password is incorrect");
+        }
       })
       .catch(function (res) {
         //handle error
@@ -83,6 +90,7 @@ function App() {
         handleChangePassword,
         handleChangeMail,
         handleLogout,
+        errorMsg,
       }}
     >
       <div className="App">
@@ -95,15 +103,17 @@ function App() {
               <Col className="main-content">
                 <Row>
                   <Switch>
-                    <Route path="/preferences">
-                      <Preferences />
-                    </Route>
-                    <PublicRoute restricted={true} path="/login">
-                      <Login />
-                    </PublicRoute>
-                    <PublicRoute restricted={true} path="/signup">
-                      <SignUp />
-                    </PublicRoute>
+                    <PrivateRoute path="/profile" component={Preferences} />
+                    <PublicRoute
+                      restricted={true}
+                      path="/login"
+                      component={Login}
+                    />
+                    <PublicRoute
+                      restricted={true}
+                      path="/signup"
+                      component={SignUp}
+                    />
                     <Route path="/crypto/:cmid">
                       <CryptoInfo />
                     </Route>

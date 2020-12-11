@@ -18,7 +18,7 @@ function Header(props) {
               <Col md={5}>
                 {isLogged ? (
                   <div className="header-button">
-                    <Link to="/user">
+                    <Link to="/profile">
                       <Button>
                         <i className="fas fa-address-card"></i> My account
                       </Button>
