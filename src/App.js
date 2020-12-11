@@ -7,16 +7,22 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Preferences from "./components/Preferences"
+import Article from "./components/Article";
+import CryptoInfo from "./components/CryptoInfo";
 import { Switch, Route } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 import axios from "axios";
+import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
 
 import "./App.css";
 
 function App() {
   // State
-  const [isLogged, setIsLogged] = useState(false);
-  const [id, setId] = useState({});
+  const [isLogged, setIsLogged] = useState(
+    localStorage.getItem("isLogged") || false
+  );
+  const [id, setId] = useState(localStorage.getItem("id") || {});
   const [Mail, setMail] = useState("");
   const [Password, setPassword] = useState("");
   // Handle
@@ -52,12 +58,12 @@ function App() {
       password: Password,
     };
     axios
-      .post("http://localhost:3000/api/login", user)
+      .post(process.env.REACT_APP_BACK_API_URL + "/api/login", user)
       .then((res) => {
         console.log("Reponse recu : " + JSON.stringify(res.data.data, null, 4));
         setId(res.data.data);
         setIsLogged(true);
-        localStorage.setItem("id", res.data.data);
+        localStorage.setItem("id", JSON.stringify(res.data.data));
         localStorage.setItem("isLogged", true);
       })
       .catch(function (res) {
@@ -92,11 +98,17 @@ function App() {
                     <Route path="/preferences">
                       <Preferences />
                     </Route>
-                    <Route path="/login">
+                    <PublicRoute restricted={true} path="/login">
                       <Login />
-                    </Route>
-                    <Route path="/signup">
+                    </PublicRoute>
+                    <PublicRoute restricted={true} path="/signup">
                       <SignUp />
+                    </PublicRoute>
+                    <Route path="/crypto/:cmid">
+                      <CryptoInfo />
+                    </Route>
+                    <Route path="/articles/:id">
+                      <Article />
                     </Route>
                     <Route path="/">
                       <PricesIndexes />

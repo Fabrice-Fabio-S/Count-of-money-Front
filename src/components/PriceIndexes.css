@@ -1,5 +1,20 @@
 .price-indexes {
-  background-color: rgb(41, 35, 99);
-  height: 200px;
+  background-color: transparent;
+  height: auto;
   width: 100%;
+  margin: 2em 0;
+}
+
+.price-indexes img {
+  width: 2em;
+  height: 2em;
+}
+
+.price-indexes table {
+  margin: 0;
+}
+
+.price-indexes a,
+.price-indexes a:hover {
+  color: inherit;
 }

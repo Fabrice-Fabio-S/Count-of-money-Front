@@ -1,44 +1,71 @@
-// import axios from "axios";
 import { Card } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import RssParser from "rss-parser";
+import { Link } from "react-router-dom";
 import moment from "moment";
+import axios from "axios";
+import Spinner from "./Spinner/Spinner";
 
 import "./News.css";
 
 function News(props) {
   const [rssData, setRssData] = useState([]);
   const [rssIsLoaded, setRssIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [numberOfArticle, setNumberOfArticle] = useState(6);
 
   useEffect(() => {
-    let parser = new RssParser();
     const rssFeed = async () => {
-      let feed = await parser.parseURL("https://cointelegraph.com/rss");
-      setRssData(feed);
+      setIsLoading(true);
+      let feed = await axios.get(
+        process.env.REACT_APP_BACK_API_URL + "/api/articles"
+      );
+      setRssData(feed.data);
       console.log(feed);
       setRssIsLoaded(true);
+      setIsLoading(false);
     };
     rssFeed();
   }, []);
 
+  const handleShowMore = () => {
+    setNumberOfArticle(numberOfArticle + 6);
+  };
+
   return (
     <Card className="news">
       <Card.Header>
-        <h3>Last Cryptocurrencies News - {rssData.title}</h3>
+        <h2>{isLoading ? "Loading news..." : rssData.title}</h2>
       </Card.Header>
       <div className="d-flex flex-wrap card-container">
+        {isLoading ? <Spinner /> : null}
         {rssIsLoaded
-          ? rssData.items.slice(0, 6).map((item, i) => {
+          ? rssData.items.slice(0, numberOfArticle).map((item, i) => {
               return (
                 <Card key={i}>
                   <Card.Img variant="top" src={item.enclosure.url} />
                   <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Title>
+                      <Link
+                        to={{
+                          pathname: `/articles/${i}`,
+                          state: { item: item },
+                        }}
+                      >
+                        {item.title}
+                      </Link>
+                    </Card.Title>
                     <Card.Text>{item.contentSnippet}</Card.Text>
                   </Card.Body>
                   <Card.Footer>
                     <small className="text-muted">
-                      {moment(item.pubDate).format("MMMM Do YYYY, h:mm:ss a")}
+                      <p>
+                        {item.categories
+                          .map((cat, i) => {
+                            return <span key={i}>{cat}</span>;
+                          })
+                          .reduce((prev, curr) => [prev, " - ", curr])}
+                      </p>
+                      {moment(item.pubDate).format("MMMM Do YYYY, h:mm a")}
                     </small>
                   </Card.Footer>
                 </Card>
@@ -46,6 +73,9 @@ function News(props) {
             })
           : null}
       </div>
+      <Card.Footer onClick={handleShowMore}>
+        <span>Show more</span>
+      </Card.Footer>
     </Card>
   );
 }

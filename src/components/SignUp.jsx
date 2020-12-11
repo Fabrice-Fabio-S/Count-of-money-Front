@@ -1,6 +1,8 @@
 import "./SignUp.css";
 import React from "react";
 import axios from "axios";
+import AuthContext from "../context/AuthContext";
+import { Redirect } from "react-router-dom";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -77,7 +79,7 @@ class SignUp extends React.Component {
     };
 
     axios
-      .post("http://localhost:3000/api/register", newUser)
+      .post(process.env.REACT_APP_BACK_API_URL + "/api/register", newUser)
       .then(function (res) {
         //handle success
         console.log(res.data);
@@ -90,66 +92,74 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="signup">
-        <p>SignUp</p>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>
-              LastName :<br></br>
-              <input
-                type="text"
-                value={this.state.LastName}
-                onChange={this.handleChangeLastName}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              FirstName :<br></br>
-              <input
-                type="text"
-                value={this.state.FirstName}
-                onChange={this.handleChangeFirstName}
-              />
-            </label>
-          </div>
-          <div>
-            {" "}
-            <label>
-              Mail :<br></br>
-              <input
-                type="text"
-                value={this.state.Mail}
-                onChange={this.handleChangeMail}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Password :<br></br>
-              <input
-                type="password"
-                value={this.state.Password}
-                onChange={this.handleChangePassword}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Confirm Password :<br></br>
-              <input
-                type="password"
-                value={this.state.ConfirmPassword}
-                onChange={this.handleChangeConfirmPassword}
-              />
-            </label>
-          </div>
+      <AuthContext.Consumer>
+        {({ isLogged }) =>
+          isLogged ? (
+            <Redirect to="/" />
+          ) : (
+            <div className="signup">
+              <p>SignUp</p>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <label>
+                    LastName :<br></br>
+                    <input
+                      type="text"
+                      value={this.state.LastName}
+                      onChange={this.handleChangeLastName}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    FirstName :<br></br>
+                    <input
+                      type="text"
+                      value={this.state.FirstName}
+                      onChange={this.handleChangeFirstName}
+                    />
+                  </label>
+                </div>
+                <div>
+                  {" "}
+                  <label>
+                    Mail :<br></br>
+                    <input
+                      type="text"
+                      value={this.state.Mail}
+                      onChange={this.handleChangeMail}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Password :<br></br>
+                    <input
+                      type="password"
+                      value={this.state.Password}
+                      onChange={this.handleChangePassword}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Confirm Password :<br></br>
+                    <input
+                      type="password"
+                      value={this.state.ConfirmPassword}
+                      onChange={this.handleChangeConfirmPassword}
+                    />
+                  </label>
+                </div>
 
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-      </div>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </form>
+            </div>
+          )
+        }
+      </AuthContext.Consumer>
     );
   }
 }
