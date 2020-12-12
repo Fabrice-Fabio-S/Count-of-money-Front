@@ -28,10 +28,14 @@ function PricesIndexes(props) {
     const getCryptosInfo = async () => {
       setIsLoading(true);
       let params = {
-        params: "tBTCUSD,tETHUSD,tUSTUSD,tLTCUSD,tXMRUSD,tBNBUSD",
+        cmids: "tBTCUSD,tETHUSD,tUSTUSD,tLTCUSD,tXMRUSD,tBNBUSD",
       };
       await axios
-        .post(process.env.REACT_APP_BACK_API_URL + "/api/cryptos", params)
+        .get(
+          process.env.REACT_APP_BACK_API_URL +
+            "/api/cryptos?cmids=" +
+            params.cmids
+        )
         .then((cryptoInfo) => {
           setCryptoData(cryptoInfo.data.data);
           console.log(cryptoInfo.data.data);
