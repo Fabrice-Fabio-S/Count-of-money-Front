@@ -23,7 +23,7 @@ function Header(props) {
                         <i className="fas fa-address-card"></i> My account
                       </Button>
                     </Link>
-                    <Link to="/logout">
+                    <Link to="/">
                       <Button onClick={handleLogout}>
                         <i className="fas fa-sign-out-alt"></i> Logout
                       </Button>

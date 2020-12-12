@@ -1,3 +1,5 @@
 export const isLogged = () => {
-  return localStorage.getItem("id") ? true : false;
+  return localStorage.getItem("id") || localStorage.getItem("googleId")
+    ? true
+    : false;
 };

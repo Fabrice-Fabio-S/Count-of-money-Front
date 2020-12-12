@@ -3,7 +3,7 @@ import React from "react";
 // import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import { Redirect } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 
 class Login extends React.Component {
   render() {
@@ -23,11 +23,25 @@ class Login extends React.Component {
             <Redirect to="/" />
           ) : (
             <div className="login">
-              <p>Login</p>
+              <h2>Login</h2>
+              <div>
+                <Button
+                  href={
+                    process.env.REACT_APP_BACK_API_URL +
+                    `/api/users/auth/google`
+                  }
+                >
+                  <i className="fab fa-google"></i>
+                  Log in with Google
+                </Button>
+              </div>
+              <div>
+                <p>OR</p>
+              </div>
               <form onSubmit={handleSubmit}>
                 <div>
                   <label>
-                    Mail :<br></br>
+                    Email :<br></br>
                     <input
                       type="text"
                       autoComplete="username"

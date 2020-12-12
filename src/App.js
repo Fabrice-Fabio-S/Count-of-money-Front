@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PricesIndexes from "./components/PricesIndexes";
 import News from "./components/News";
@@ -9,7 +9,7 @@ import SignUp from "./components/SignUp";
 import Preferences from "./components/Preferences";
 import Article from "./components/Article";
 import CryptoInfo from "./components/CryptoInfo";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 import axios from "axios";
 import PrivateRoute from "./components/PrivateRoute";
@@ -18,11 +18,16 @@ import PublicRoute from "./components/PublicRoute";
 import "./App.css";
 
 function App() {
+  let googleAuth = useLocation();
+  let history = useHistory();
   // State
   const [isLogged, setIsLogged] = useState(
     localStorage.getItem("isLogged") || false
   );
   const [id, setId] = useState(localStorage.getItem("id") || {});
+  const [googleId, setGoogleId] = useState(
+    localStorage.getItem("googleId") || {}
+  );
   const [Mail, setMail] = useState("");
   const [Password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -79,11 +84,34 @@ function App() {
       });
   };
 
+  useEffect(() => {
+    // Handle google auth
+    let searchParams = new URLSearchParams(googleAuth.search);
+    if (searchParams.get("token") !== null) {
+      let googleId = {
+        lastname: searchParams.get("lastname"),
+        firstname: searchParams.get("firstname"),
+        email: searchParams.get("email"),
+        token: searchParams.get("token"),
+      };
+      console.log(googleId);
+      setGoogleId(googleId);
+      setIsLogged(true);
+      localStorage.setItem("googleId", JSON.stringify(googleId));
+      localStorage.setItem("isLogged", true);
+      searchParams.delete("lastname", "firstname", "email", "token");
+      history.replace({
+        search: null,
+      });
+    }
+  }, [googleAuth, history]);
+
   return (
     <AuthContext.Provider
       value={{
         isLogged,
         id,
+        googleId,
         Mail,
         Password,
         handleSubmit,
@@ -120,7 +148,7 @@ function App() {
                     <Route path="/articles/:id">
                       <Article />
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                       <PricesIndexes />
                       <News />
                     </Route>
