@@ -6,7 +6,7 @@ import "./Header.css";
 function Header(props) {
   return (
     <AuthContext.Consumer>
-      {({ isLogged, handleLogout, id }) => (
+      {({ isLogged, handleLogout, id, googleId }) => (
         <div className="header">
           <Container fluid>
             <Row>
@@ -18,7 +18,12 @@ function Header(props) {
               <Col md={5}>
                 {isLogged ? (
                   <div className="header-button">
-                    <Link to="/profile">
+                    <Link
+                      to={{
+                        pathname: "/profile",
+                        state: { id: id, googleId: googleId },
+                      }}
+                    >
                       <Button>
                         <i className="fas fa-address-card"></i> My account
                       </Button>
@@ -43,13 +48,20 @@ function Header(props) {
                     </Link>
                   </div>
                 )}
-                {id.firstname ? (
+                {/* {id.firstname ? (
                   <div>
                     <em>
                       Hello {id.firstname} {id.lastname}
                     </em>
                   </div>
                 ) : null}
+                {googleId.firstname ? (
+                  <div>
+                    <em>
+                      Hello {googleId.firstname} {googleId.lastname}
+                    </em>
+                  </div>
+                ) : null} */}
               </Col>
             </Row>
           </Container>

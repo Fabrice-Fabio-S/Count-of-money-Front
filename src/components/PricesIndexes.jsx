@@ -23,19 +23,23 @@ function PricesIndexes(props) {
   const [cryptoIsLoaded, setCryptoIsLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rateExchange, setRateExchange] = useState(0.825);
+  const [localStorageId, setLocalStorages] = useState(
+    JSON.parse(localStorage.getItem("id"))
+  );
 
   useEffect(() => {
     const getCryptosInfo = async () => {
       setIsLoading(true);
-      let params = {
-        cmids: "tBTCUSD,tETHUSD,tUSTUSD,tLTCUSD,tXMRUSD,tBNBUSD",
-      };
+      let cmids = "tBTCUSD,tETHUSD,tUSTUSD,tLTCUSD,tXMRUSD";
+      if (
+        localStorageId !== null &&
+        localStorageId.cryptoList !== "" &&
+        localStorageId.cryptoList !== null
+      ) {
+        cmids = localStorageId.cryptoList;
+      }
       await axios
-        .get(
-          process.env.REACT_APP_BACK_API_URL +
-            "/api/cryptos?cmids=" +
-            params.cmids
-        )
+        .get(process.env.REACT_APP_BACK_API_URL + "/api/cryptos?cmids=" + cmids)
         .then((cryptoInfo) => {
           setCryptoData(cryptoInfo.data.data);
           console.log(cryptoInfo.data.data);

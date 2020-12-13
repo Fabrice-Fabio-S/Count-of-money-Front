@@ -18,7 +18,7 @@ import PublicRoute from "./components/PublicRoute";
 import "./App.css";
 
 function App() {
-  let googleAuth = useLocation();
+  let location = useLocation();
   let history = useHistory();
   // State
   const [isLogged, setIsLogged] = useState(
@@ -31,19 +31,26 @@ function App() {
   const [Mail, setMail] = useState("");
   const [Password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  // Handle
+
+  // HANDLE MAIL CHANGE
   const handleChangeMail = (e) => {
     setMail(e.target.value);
   };
+  // HANDLE PASSWORD CHANGE
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
+  // LOGOUT
   const handleLogout = () => {
     setIsLogged(false);
     setId({});
+    setGoogleId({});
     localStorage.clear();
     console.log("---- Logout ----");
   };
+
+  // LOGIN
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -85,8 +92,8 @@ function App() {
   };
 
   useEffect(() => {
-    // Handle google auth
-    let searchParams = new URLSearchParams(googleAuth.search);
+    // HANDLE GOOGLE AUTH
+    let searchParams = new URLSearchParams(location.search);
     if (searchParams.get("token") !== null) {
       let googleId = {
         lastname: searchParams.get("lastname"),
@@ -104,7 +111,34 @@ function App() {
         search: null,
       });
     }
-  }, [googleAuth, history]);
+  }, [location, history]);
+
+  useEffect(() => {
+    console.log(location);
+    let newId = id;
+    if (location.state !== undefined) {
+      if (
+        location.state.newUserEmail !== undefined &&
+        location.state.newUserFirstName !== undefined &&
+        location.state.newUserLastName !== undefined
+      ) {
+        const {
+          newUserEmail,
+          newUserFirstName,
+          newUserLastName,
+        } = location.state;
+        //TODO mettre à jour le state avec les new infos
+        // console.log(id);
+        // console.log(newUserEmail, newUserFirstName, newUserLastName);
+
+        newId["email"] = newUserEmail;
+        newId["firstname"] = newUserFirstName;
+        newId["lastname"] = newUserLastName;
+        setId(newId);
+        console.log(id);
+      }
+    }
+  }, [location, id]);
 
   return (
     <AuthContext.Provider
@@ -131,7 +165,10 @@ function App() {
               <Col className="main-content">
                 <Row>
                   <Switch>
-                    <PrivateRoute path="/profile" component={Preferences} />
+                    <PrivateRoute
+                      path="/profile"
+                      component={Preferences}
+                    ></PrivateRoute>
                     <PublicRoute
                       restricted={true}
                       path="/login"
