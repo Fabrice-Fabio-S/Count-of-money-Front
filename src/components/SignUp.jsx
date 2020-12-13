@@ -98,11 +98,11 @@ class SignUp extends React.Component {
             <Redirect to="/" />
           ) : (
             <div className="signup">
-              <p>SignUp</p>
+              <h2>SignUp</h2>
               <form onSubmit={this.handleSubmit}>
                 <div>
                   <label>
-                    LastName :<br></br>
+                    Last Name :<br></br>
                     <input
                       type="text"
                       value={this.state.LastName}
@@ -112,7 +112,7 @@ class SignUp extends React.Component {
                 </div>
                 <div>
                   <label>
-                    FirstName :<br></br>
+                    First Name :<br></br>
                     <input
                       type="text"
                       value={this.state.FirstName}
@@ -123,7 +123,7 @@ class SignUp extends React.Component {
                 <div>
                   {" "}
                   <label>
-                    Mail :<br></br>
+                    Email :<br></br>
                     <input
                       type="text"
                       value={this.state.Mail}

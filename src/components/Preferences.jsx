@@ -118,7 +118,26 @@ class Preferences extends React.Component {
     }
   }
 
-  updateUserInfo() {
+  updateUserInfo(event) {
+    let pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!this.state.LastName) {
+      alert("LastName not specified");
+      event.preventDefault();
+      return -1;
+    }
+    if (!this.state.FirstName) {
+      alert("LastName not specified");
+      event.preventDefault();
+      return -1;
+    }
+    if (!pattern.test(this.state.Mail)) {
+      alert("Incorrect filled in email");
+      event.preventDefault();
+      return -1;
+    }
+
     axios.defaults.headers.common = {
       Authorization: `bearer ${this.state.token}`,
     };
