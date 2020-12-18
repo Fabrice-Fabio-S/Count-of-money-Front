@@ -92,8 +92,14 @@ class Preferences extends React.Component {
 
       let userCryptoListFromStorage = localStorage.getItem("id");
       userCryptoListFromStorage = JSON.parse(userCryptoListFromStorage);
-      let userCryptoList = userCryptoListFromStorage.cryptoList.split(",");
-      console.log(userCryptoList);
+      console.log(userCryptoListFromStorage);
+      let userCryptoList;
+      if (userCryptoListFromStorage.hasOwnProperty("cryptoList")) {
+        userCryptoList = userCryptoListFromStorage.cryptoList.split(",");
+        console.log(userCryptoList);
+      } else {
+        userCryptoList = [];
+      }
 
       if (userCryptoList[0] === "") {
         userCryptoList = [];
